@@ -3,21 +3,21 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>GifTastic</title>
+    <title>Gif That Meme</title>
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
   </head>
-  <body style="box-sizing: border-box;">
+  <body style="box-sizing: border-box; background-image:url(https://cdn.dribbble.com/users/27292/screenshots/971165/animated_bg.gif);background-size:cover;background-repeat:no-repeat">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
     <nav class="navbar navbar-light bg-faded">
-        <h1 class="navbar-brand">GifTastic</h1>
-        <div id="topics"></div>
-        <form class="form-inline my-2 my-lg-0" name="form">
-            <input class="form-control mr-sm-2" placeholder="Add a Topic">
-            <button id="submit" href="#" class="btn btn-outline-success my-2 my-sm-0" onclick="gifTastic.addTopic();return false">Submit</button>
+        <h1 class="navbar-brand text-light">Gif That Meme</h1>
+        <form class="form-inline mt-2 my-2 my-lg-0 d-block" name="form">
+            <input class="form-control input-sm mr-sm-2" placeholder="Add a Meme">
+            <button id="submit" href="#" class="btn btn-md btn-success my-2 my-sm-0" onclick="gifTastic.addTopic();return false">Submit</button>
         </form>
+        <div id="topics"></div>
     </nav>
     <div id="gifs" class="container-fluid text-center"></div>
     <script src="app.js" type="text/javascript"></script>
