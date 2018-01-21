@@ -1,15 +1,6 @@
 var gifTastic = {
 //Array of topics
-    topics: [
-        "white guy blinking",
-        "doge",
-        "ermahgerd",
-        "overly attached girlfriend",
-        "but that's none of my business",
-        "side eyeing chloe",
-        "condescending wonka",
-        "neil degrasse tyson reaction"
-    ],
+    topics: [ "white guy blinking","doge","ermahgerd","overly attached girlfriend","but that's none of my business","side eyeing chloe","condescending wonka","neil degrasse tyson reaction"],
 //Plays or pauses the gif when clicked on
     playGif: function(gifSelected){
         var dataType = gifSelected.getAttribute("data-type");
@@ -23,42 +14,54 @@ var gifTastic = {
         }
     },
 //Calls the Giphy API and searches for gifs based on the topic button selected
-    generateGifs: function(topic){
-        $("#gifs").empty();
+    generateGif: function(topic){
+        var $gifs =  $("#gifs");
+        $gifs.empty();
         topic = topic.value.replace(/\s/g, "+");
-        var apiKey = "&apikey=C5d75scOHxPnli61nvl3JPjObqAnq7Ub&limit=10";
-        var query = "https://api.giphy.com/v1/gifs/search?q=" + topic + apiKey;
         $.ajax(this.href, {
-            url: query,
+            url: "https://api.giphy.com/v1/gifs/search?" + "q=" + topic + "&apikey=C5d75scOHxPnli61nvl3JPjObqAnq7Ub" + "&limit=10",
             method: "GET"
         }).done(function(response) {
-            var rowNum;
             for(i = 0; i < response.data.length; i++){
-                var src = response.data[i].images.fixed_height_still.url;
-                var rating = response.data[i].rating.toUpperCase();
-                var datastill = response.data[i].images.fixed_height_still.url;
-                var dataAnimate = response.data[i].images.fixed_height.url;
-                $("#gifs").append('<figure id="figure' + i + '" class="mx-2" style="display:inline-block"></figure>');
-                $("#figure" + i).append('<figcaption class="figure-caption text-dark"><strong>Rating: ' + rating + '</strong></figcaption>');
-                $("#figure" + i).append('<img id="gif' + i + '" class="figure-img img-fluid rounded" onclick="gifTastic.playGif(this)">');
-                $("#gif" + i).attr({"src":src,"data-still":datastill,"data-animate":dataAnimate,"data-type":"still"})
+                var $figure = $("<figure>");
+                $figure.addClass("mx-2 d-inline-block");
+                var $figCaption = $("<figcaption>");
+                $figCaption.addClass("figure-caption text-dark"); 
+                $figCaption.html("<strong>Rating: " + response.data[i].rating.toUpperCase() + "</strong");
+                $($figure).append($figCaption);       
+                var $img = $("<img>");
+                $img.addClass("figure-img img-fluid rounded");
+                $img.attr(
+                    {"onclick":"gifTastic.playGif(this)",
+                    "src":response.data[i].images.fixed_height_still.url,
+                    "data-still":response.data[i].images.fixed_height_still.url,
+                    "data-animate":response.data[i].images.fixed_height.url,
+                    "data-type":"still"}
+                );
+                $($figure).append($img);  
+                $gifs.append($figure);
             }
         });
     },
 //Creates a topic button when entered in the input form
     addTopic: function(){
-        var newTopic = ($("input").val());
-        this.topics.push(newTopic);
-        var i = this.topics.indexOf(newTopic);
-        $("#topics").append('<button value="' + this.topics[i] + '" class="btn btn-sm btn-info m-1" onclick="gifTastic.generateGifs(this)">' + this.topics[i] + '</button>');
-        ($("input").val(""));
-    },
-//Creates buttons for initial topics
-    currentTopics: function(){
-        for(i = 0; i < this.topics.length; i++){
-            $("#topics").append('<button value="' + this.topics[i] + '" class="btn btn-sm btn-info m-1" onclick="gifTastic.generateGifs(this)">' + this.topics[i] + '</button>');
+        var $input = ($("input"));
+        var newTopic = $input.val();
+        var $topics =  $("#topics");
+        $topics.empty();
+        if(newTopic !== ""){
+            this.topics.push(newTopic);
         }
+        for(i = 0; i < this.topics.length; i++){
+            var $button = $("<button>");
+            $button.addClass("topics btn btn-sm btn-info m-1");
+            $button.val(this.topics[i]);
+            $button.text(this.topics[i]);
+            $button.attr("onclick","gifTastic.generateGif(this)");
+            $topics.append($button);
+        }
+        $input.val("");
     }
 }
-//Call when page first loads
-gifTastic.currentTopics();
+//Gets current topics when page first loads
+gifTastic.addTopic();
