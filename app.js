@@ -46,7 +46,7 @@ var gifTastic = {
 //Creates a topic button when entered in the input form
     addTopic: function(){
         var $input = ($("input"));
-        var newTopic = $input.val();
+        var newTopic = $input.val().trim().toLowerCase();
         var $topics =  $("#topics");
         $topics.empty();
         if(newTopic !== ""){
