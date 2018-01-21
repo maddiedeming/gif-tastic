@@ -28,7 +28,7 @@ var gifTastic = {
                 var $figCaption = $("<figcaption>");
                 $figCaption.addClass("figure-caption text-dark"); 
                 $figCaption.html("<strong>Rating: " + response.data[i].rating.toUpperCase() + "</strong");
-                $($figure).append($figCaption);       
+                $figure.append($figCaption);       
                 var $img = $("<img>");
                 $img.addClass("figure-img img-fluid rounded");
                 $img.attr(
@@ -38,7 +38,7 @@ var gifTastic = {
                     "data-animate":response.data[i].images.fixed_height.url,
                     "data-type":"still"}
                 );
-                $($figure).append($img);  
+                $figure.append($img);  
                 $gifs.append($figure);
             }
         });
